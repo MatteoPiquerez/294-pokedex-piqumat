@@ -29,11 +29,9 @@
         - class="text-center" : Centre le texte horizontalement.
         - class="w-100" : Assure que le conteneur occupe toute la largeur disponible.
     -->
-    <v-footer>
-      <div class="px-4 text-center w-100">
-        2025 - Pokédex
-      </div>
-    </v-footer>
+    <app-footer>
+
+    </app-footer>
   </v-app>
 </template>
 

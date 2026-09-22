@@ -31,24 +31,7 @@
         md="4"
         lg="3"
       >
-        <v-card>
-          <!--
-          Image du Pokémon
-            * :src lie dynamiquement le chemin de l'image
-            * height="200" fixe la hauteur
-            * cover remplit l'espace en gardant les proportions
-          -->
-          <v-img
-            :src="getImageUrl(pokemon.img)"
-            :alt="pokemon.name"
-            height="200"
-            cover
-          />
-          <!-- Nom du Pokémon -->
-          <v-card-title>{{ pokemon.name }}</v-card-title>
-          <!-- Niveau du Pokémon -->
-          <v-card-subtitle>Niveau {{ pokemon.level }}</v-card-subtitle>
-        </v-card>
+        <pokemon-card :pokemon="pokemon" />
       </v-col>
     </v-row>
   </v-container>
@@ -56,7 +39,7 @@
 
 <script setup>
 // Import du helper pour construire les chemins d'images
-import { getImageUrl } from '@/utils/imageUrl'
+import PokemonCard from "@/components/PokemonCard.vue";
 
 // Variable réactive contenant la liste des Pokémon (tableau vide au départ)
 // ref() est auto-importé grâce à unplugin-auto-import
