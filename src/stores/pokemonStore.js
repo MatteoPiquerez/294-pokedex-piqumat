@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import api from "@/plugins/axios";
 
 /**
  * Store Pinia pour gérer les données des Pokémon.
@@ -57,31 +58,36 @@ export const usePokemonStore = defineStore('pokemon', {
      * Charge tous les Pokémon depuis l'API.
      * Note : ne gère pas isLoading — c'est init() qui s'en charge.
      */
-    async fetchPokemons() {
-      const response = await fetch('http://localhost:3535/pokemons')
+    async fetchPokemons ({ withLoader = true } = {}) {
+      if (withLoader) this.isLoading = true
 
-      // Vérifier que la réponse est OK (status 200-299)
-      if (!response.ok) {
-        throw new Error(`Erreur HTTP : ${response.status}`)
+      try {
+        const response = await api.get('/pokemons')
+        this.pokemons = response.data
+      } catch (error) {
+        console.error('Erreur:', error.message)
+        this.pokemons = []
+      } finally {
+        if (withLoader) this.isLoading = false
       }
-
-      this.pokemons = await response.json()
-      console.log('Pokémon chargés :', this.pokemons.length)
     },
 
     /**
      * Charge tous les types de Pokémon depuis l'API.
      * Note : ne gère pas isLoading — c'est init() qui s'en charge.
      */
-    async fetchTypes() {
-      const response = await fetch('http://localhost:3535/types')
+    async fetchTypes ({ withLoader = true } = {}) {
+      if (withLoader) this.isLoading = true
 
-      if (!response.ok) {
-        throw new Error(`Erreur HTTP : ${response.status}`)
+      try {
+        const response = await api.get('/types')
+        this.types = response.data
+      } catch (error) {
+        console.error('Erreur:', error.message)
+        this.types = []
+      } finally {
+        if (withLoader) this.isLoading = false
       }
-
-      this.types = await response.json()
-      console.log('Types chargés :', this.types.length)
     },
 
     /**
